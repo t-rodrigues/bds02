@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.devsuperior.bds02.dto.CityDTO;
 import com.devsuperior.bds02.entities.City;
+import com.devsuperior.bds02.exceptions.BadRequestException;
+import com.devsuperior.bds02.exceptions.ObjectNotFoundException;
 import com.devsuperior.bds02.repositories.CityRepository;
 
 @Service
@@ -25,5 +27,16 @@ public class CityService {
         var city = new City(null, cityDTO.getName());
         cityRepository.save(city);
         return new CityDTO(city);
+    }
+
+    public void delete(Long cityId) {
+        var city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new ObjectNotFoundException("City not found: " + cityId));
+
+        try {
+            cityRepository.delete(city);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 }
