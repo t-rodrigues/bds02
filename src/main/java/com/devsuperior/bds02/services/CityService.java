@@ -19,8 +19,8 @@ public class CityService {
         this.cityRepository = cityRepository;
     }
 
-    public List<City> findAllOrderByName() {
-        return cityRepository.findAllByOrderByNameAsc();
+    public List<CityDTO> findAllOrderByName() {
+        return cityRepository.findAllByOrderByNameAsc().stream().map(CityDTO::new).toList();
     }
 
     public CityDTO create(CityDTO cityDTO) {

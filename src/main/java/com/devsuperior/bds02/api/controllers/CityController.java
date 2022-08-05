@@ -27,7 +27,7 @@ public class CityController {
 
     @GetMapping
     public ResponseEntity<List<CityDTO>> getCities() {
-        var cities = cityService.findAllOrderByName().stream().map(CityDTO::new).toList();
+        var cities = cityService.findAllOrderByName();
 
         return ResponseEntity.ok(cities);
     }
